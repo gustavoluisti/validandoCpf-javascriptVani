@@ -13,15 +13,14 @@ function ValidaCPF(cpfEnviado) {
 ValidaCPF.prototype.valida = function() {
     if(typeof this.cpfLimpo === 'undefined') return false;
     if(this.cpfLimpo.length !== 11) return false;
+    if(this.isSequencia()) return false;
 
     const cpfParcial = this.cpfLimpo.slice(0, -2);
     let digito1 = this.criaDigito(cpfParcial);
     let digito2 = this.criaDigito(cpfParcial + digito1);
    
     const novoCpf = cpfParcial + digito1 + digito2;
-    console.log(novoCpf);
-
-    return true;
+    return novoCpf === this.cpfLimpo;
 }
 
 ValidaCPF.prototype.criaDigito = function(cpfParcial) {
@@ -34,6 +33,11 @@ ValidaCPF.prototype.criaDigito = function(cpfParcial) {
     }, 0);
     const digito = 11 - (total % 11);
     return digito > 9 ? '0' : String(digito);
+}
+
+ValidaCPF.prototype.isSequencia = function() {
+    const sequencia = this.cpfLimpo[0].repeat(this.cpfLimpo.length);
+    return sequencia === this.cpfLimpo;
 }
 
 const cpf = new ValidaCPF('070.987.720-03');
