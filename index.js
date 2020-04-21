@@ -17,7 +17,10 @@ ValidaCPF.prototype.valida = function() {
     const cpfParcial = this.cpfLimpo.slice(0, -2);
     let digito1 = this.criaDigito(cpfParcial);
     let digito2 = this.criaDigito(cpfParcial + digito1);
-    console.log(digito2)
+   
+    const novoCpf = cpfParcial + digito1 + digito2;
+    console.log(novoCpf);
+
     return true;
 }
 
@@ -30,7 +33,7 @@ ValidaCPF.prototype.criaDigito = function(cpfParcial) {
         return ac;
     }, 0);
     const digito = 11 - (total % 11);
-    return digito > 9 ? 0 : digito;
+    return digito > 9 ? '0' : String(digito);
 }
 
 const cpf = new ValidaCPF('070.987.720-03');
